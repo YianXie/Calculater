@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8" name="myCalculater">
     <style>
         body {
             text-align: center;
+            background-color: whitesmoke;
         }
 
         button {
@@ -18,63 +20,191 @@
 
         .plus_sign,.minus_sign,.times_sign,.division_sign,.equal_sign {
         	background-color: orange;
+        	border: none;
         }
 
         .negative_or_positive,.percentage_sign,.clear {
         	background-color: lightslategray;
         }
+
+        .History_Button {
+        	width: 55px;
+			position: relative;
+			right: 670px;
+			top: -360px;
+			padding: 0px;
+			border: none;
+        }
+
+        .Button_Image {
+        	width: 50px;
+        	height: 50px;
+        }
+
+        .submit_button {
+        	width: 100px;
+        	height: 80px;
+        }
+
+        /*.setting_checkbox {
+        	position: relative;
+        	scale: 0.1;
+        	visibility: hidden;
+        	top: 0;
+        }*/
     </style>
     <title>计算器</title>
 </head>
-<body>
-    <p id="show_progress_h1"></p>
-    <button onclick="clear_all()" id="C" class="clear">C</button>
-    <button onclick="negative_number()" id="+/-" class="negative_or_positive">+/-</button>
-    <button onclick="percentage()" id="%" class="percentage_sign">%</button>
-    <button onclick="add_to_list(this.id)" id="/" class="division_sign">/</button>
-    <br>
-    <button onclick="add_to_list(this.id)" id="1">1</button>
-    <button onclick="add_to_list(this.id)" id="2">2</button>
-    <button onclick="add_to_list(this.id)" id="3">3</button>
-    <button onclick="add_to_list(this.id)" id="+" class="plus_sign">+</button>
-    <br>
-    <button onclick="add_to_list(this.id)" id="4">4</button>
-    <button onclick="add_to_list(this.id)" id="5">5</button>
-    <button onclick="add_to_list(this.id)" id="6">6</button>
-    <button onclick="add_to_list(this.id)" id="-" class="minus_sign">-</button>
-    <br>
-    <button onclick="add_to_list(this.id)" id="7">7</button>
-    <button onclick="add_to_list(this.id)" id="8">8</button>
-    <button onclick="add_to_list(this.id)" id="9">9</button>
-    <button onclick="add_to_list(this.id)" id="*" class="times_sign">*</button>
-    <br>
-    <button onclick="add_to_list(this.id)" class="number_0" id="0">0</button>
-    <button onclick="add_to_list(this.id)" id=".">.</button>
-    <button onclick="calculate()" id="=" class="equal_sign">=</button>
+<body id="main_body">
+<div>
+	<h2 id="show_progress_h1" class="result_paragraph">0</h2>
+	<button onclick="clear_all()" id="C" class="clear">C</button>
+	<button onclick="negative_number()" id="+/-" class="negative_or_positive">+/-</button>
+	<button onclick="percentage()" id="%" class="percentage_sign">%</button>
+	<button onclick="add_to_list(this.id)" id="/" class="division_sign">/</button>
+	<br>
+	<button onclick="add_to_list(this.id)" id="1">1</button>
+	<button onclick="add_to_list(this.id)" id="2">2</button>
+	<button onclick="add_to_list(this.id)" id="3">3</button>
+	<button onclick="add_to_list(this.id)" id="+" class="plus_sign">+</button>
+	<br>
+	<button onclick="add_to_list(this.id)" id="4">4</button>
+	<button onclick="add_to_list(this.id)" id="5">5</button>
+	<button onclick="add_to_list(this.id)" id="6">6</button>
+	<button onclick="add_to_list(this.id)" id="-" class="minus_sign">-</button>
+	<br>
+	<button onclick="add_to_list(this.id)" id="7">7</button>
+	<button onclick="add_to_list(this.id)" id="8">8</button>
+	<button onclick="add_to_list(this.id)" id="9">9</button>
+	<button onclick="add_to_list(this.id)" id="*" class="times_sign">*</button>
+	<br>
+	<button onclick="add_to_list(this.id)" class="number_0" id="0">0</button>
+	<button onclick="add_to_list(this.id)" id=".">.</button>
+	<button onclick="calculate()" id="=" class="equal_sign">=</button>
+</div>
+	<button onclick="view_history()" class="History_Button"><img src="history_sign.jpg" class="Button_Image"></button>
+	<div class="setting_checkbox" id="setting_checkbox">
+	    <form id="setting_form">
+		  <input type="checkbox" id="enable_autosave_or_not" name="enable_autosave_or_not" value="autosave" onchange="setting()">
+		  <label for="enable_autosave_or_not"> Auto save result</label><br>
+
+		  <input type="checkbox" id="enable_auto_copy_result" name="enable_auto_copy_result" value="autocopy" onchange="setting()">
+		  <label for="enable_auto_copy_result"> Auto copy result</label><br><br>
+		</form>
+	</div>
+	<div>
+		<form>
+			<br>
+			<b>主题颜色: </b>
+			<select id="prefered_color" onchange="favorite_color()">
+				<option id="white" value="white"> Whtie(defalt) </option>
+				<option id="red" value="red"> Red </option>
+				<option id="blue" value="blue"> Blue </option>
+				<option id="green" value="green"> Green </option>
+				<option id="yellow" value="yellow"> Yellow </option>
+			</select>
+		</form>
+	</div>
 </body>
 <script>
+
     var show_progress = [];
     var current_number = "";
+    var history_list = [];
+    var autosave_or_not = false
+    var autocopy_or_not = false
+    var key_name = ''
+    var toggle_plus_sign = false
+    var shiftKeyIsPressed = false
+
+    document.addEventListener("keydown", (event) => {
+        key_name = event.key;
+        if (key_name === "Shift") {
+            shiftKeyIsPressed = true;
+            // toggle_plus_sign = true
+        }
+    }, false);
+
+    document.addEventListener("keyup", (event) => {
+        key_name = event.key;
+        if (key_name === "Shift") {
+            shiftKeyIsPressed = false;
+        }
+    }, false);
+
+    
+
+	function setting() {
+		var autocopy = document.querySelector("#enable_auto_copy_result")
+		if (autocopy.checked == true) {
+			autocopy_or_not = true
+		}
+
+		var autosave = document.querySelector("#enable_autosave_or_not")
+		if (autosave.checked == true) {
+			autosave_or_not = true
+		}
+    }
 
     function add_to_list(number_id) {
+    	show_progress_h1.innerHTML = ''
         if (number_id.match(/[0-9.]/)) {
-            // If the button is a digit or a decimal point, add it to the current number
-            current_number += number_id;
+            if (shiftKeyIsPressed && toggle_plus_sign) {
+                show_progress.push(number_id);
+                current_number = '+';
+                toggle_plus_sign = false; // 重置toggle_plus_sign
+            } else {
+                current_number += number_id;
+            }
         } else {
             // If the button is an operator or equals, push the current number and operator to the list
             if (current_number !== "") {
+            	show_progress_h1.innerHTML += current_number
+
+            	if (number_id == "+") {
+            		document.getElementById("+").style.border = "solid"
+            		toggle_plus_sign = true
+            	} else if (number_id == "-") {
+            		document.getElementById("-").style.border = "solid"
+            	} else if (number_id == "*") {
+            		document.getElementById("*").style.border = "solid"
+            	} else if (number_id == "/") {
+            		document.getElementById("/").style.border = "solid"
+            	}  
+
+            	if (toggle_plus_sign == true) {
+            		document.getElementById("+").style.borderColor = "red"
+            	}
                 show_progress.push(parseFloat(current_number));
                 current_number = "";
             }
             show_progress.push(number_id);
         }
-        show_progress_h1.innerHTML = show_progress.join(" ");
+        show_progress_h1.innerHTML += current_number
     }
+        
 
     function clear_all() {
+    	const current_time = new Date()
+    	if (autosave_or_not !== true) {
+    		save_or_not = confirm("是否要保存这次的计算结果?")
+    		if (save_or_not == true) {
+    			localStorage.setItem("history_localstorage",show_progress)
+        		localStorage.setItem("current_time",current_time)
+    		}
+    	} else {
+        	localStorage.setItem("history_localstorage",show_progress)
+        	localStorage.setItem("current_time",current_time)
+        }
         show_progress.length = 0;
         current_number = "";
-        show_progress_h1.innerHTML = "";
+        show_progress_h1.innerHTML = "0";
+        if ((document.getElementById("+").style.border !== "none") || (document.getElementById("-").style.border !== "none") || (document.getElementById("*").style.border !== "none") || (document.getElementById("/").style.border !== "none")) {
+        	document.getElementById("+").style.border = "none"
+        	document.getElementById("-").style.border = "none"
+        	document.getElementById("*").style.border = "none"
+        	document.getElementById("/").style.border = "none"
+        }
     }
 
     function negative_number() {
@@ -90,6 +220,36 @@
     		show_progress_h1.innerHTML = show_progress.join(" ") + " " + current_number;
     	}
     }
+
+    function view_history() {
+    	window.open("file:///Users/ianxie/Desktop/Python_HTML/%E8%AE%A1%E7%AE%97%E5%99%A8localstorage.html")
+    }
+
+    function favorite_color() {
+    	choosed_color = document.querySelector("#prefered_color")
+    	if (choosed_color.value == "red") {
+    		document.body.style.backgroundColor = "brown"
+    	} else if (choosed_color.value == "yellow") {
+    		document.body.style.backgroundColor = "khaki"
+    	} else if (choosed_color.value == "blue") {
+    		document.body.style.backgroundColor = "paleturquoise"
+    	} else if (choosed_color.value == "green") {
+    		document.body.style.backgroundColor = "lightgreen"
+    	} else {
+    		document.body.style.backgroundColor = "whitesmoke"
+    	}
+    }
+
+	// function setting_button_function() {
+	// 	const setting_timeout = setTimeout(larger_setting(),3000);
+	// 	document.getElementById("setting_checkbox").style.visibility = "visible";
+	// 	function larger_setting() {
+	// 		for (let i = 0;i < 1;i+=0.1) {
+	// 			console.log(i)
+	// 			document.getElementById('setting_checkbox').style.scale = i
+	// 		}
+	// 	}
+    // }
 
     function calculate() {
         if (current_number !== "") {
@@ -111,7 +271,13 @@
                 result /= operand;
             }
         }
+
+        if (autocopy_or_not == true) {
+        	navigator.clipboard.writeText(result)
+        }
         show_progress_h1.innerHTML = result;
+        show_progress.push("=")
+        show_progress.push(result)
     }
 </script>
 </html>
