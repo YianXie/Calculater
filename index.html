@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" name="myCalculater">
+	<meta charset="utf-8" name="myCalculater" content="width=device-width, initual-scale=1">
+	<script src="https://kit.fontawesome.com/6e8d093844.js" crossorigin="anonymous"></script>
     <style>
         body {
             text-align: center;
@@ -12,10 +13,7 @@
             margin: 5px;
             width: 50px;
             height: 50px;
-        }
-
-        .number_0 {
-            width: 115px;
+			font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         }
 
         .plus_sign,.minus_sign,.times_sign,.division_sign,.equal_sign {
@@ -23,21 +21,67 @@
         	border: none;
         }
 
-		.clear {
-			margin-right: 10px;
+		.plus_sign:hover {
+			background-color: rgb(181, 113, 49);
 		}
 
-        .negative_or_positive,.percentage_sign,.clear,.perimeter_and_area {
+		.number_1:active,.number_2:active,.number_3:active,.number_4:active,.number_5:active,.number_6:active,.number_7:active,.number_8:active,.number_9:active,.number_0:active {
+  			background-color: white;
+  			box-shadow: 0px 5px #666;
+  			transform: translateY(4px);
+		}
+
+		.plus_sign:active,.minus_sign:active,.times_sign:active,.division_sign:active {
+			background-color: orange;
+			box-shadow: 0px 5px black;
+		}
+
+		.minus_sign:hover {
+			background-color: rgb(181, 113, 49);
+		}
+
+		.times_sign:hover {
+			background-color: rgb(181, 113, 49);
+		}
+
+		.division_sign:hover {
+			background-color: rgb(181, 113, 49);
+		}
+
+        .negative_or_positive,.percentage_sign,.clear {
         	background-color: lightslategray;
+			border: none;
         }
+
+		.negative_or_positive:active,.percentage_sign:active,.clear:active {
+			background-color: lightslategray;
+			box-shadow: 0px 5px #666;
+		}
+
+		.negative_or_positive:hover {
+			background-color: rgb(46, 71, 95);
+		}
+
+		.percentage_sign:hover {
+			background-color: rgb(46, 71, 95);
+		}
+
+		.clear:hover {
+			background-color: rgb(227, 66, 66);
+		}
+
+		.equal_sign:hover {
+			background-color: rgb(243, 199, 199);
+		}
 
         .History_Button {
         	width: 55px;
 			position: relative;
-			right: 670px;
-			top: -360px;
+			right: 710px;
+			top: -420px;
 			padding: 0px;
 			border: none;
+			background: none;
         }
 
         .Button_Image {
@@ -49,14 +93,27 @@
         	width: 100px;
         	height: 80px;
         }
+
+		.register_login {
+			position: relative;
+			left: 700px;
+			top: -445px;
+		}
+
+		.question_mark_button {
+			position: relative;
+			right: -670px;
+			bottom: -362px;
+			border: none;
+			background: none;
+		}
     </style>
-    <title>计算器</title>
+    <title>Calculater</title>
 </head>
 <body id="main_body">
 <div>
 	<h2 id="show_progress_h1" class="result_paragraph">0</h2>
 	<button onclick="clear_all()" id="C" class="clear">C</button>
-	<button onclick="perimeter_and_area()" id="perimeter_and_area" class="perimeter_and_area">面</button>
 	<button onclick="negative_number()" id="+/-" class="negative_or_positive">+/-</button>
 	<button onclick="percentage()" id="%" class="percentage_sign">%</button>
 	<button onclick="add_to_list(this.id)" id="/" class="division_sign">/</button>
@@ -78,13 +135,20 @@
 	<br>
 	<button onclick="add_to_list(this.id)" class="number_0" id="0">0</button>
 	<button onclick="add_to_list(this.id)" id="dot_sign" class="dot_sign">.</button>
+	<button onclick="perimeter_and_area()" id="perimeter_and_area" class="perimeter_and_area">面</button>
 	<button onclick="calculate()" id="=" class="equal_sign">=</button>
 </div>
+	<div>
+		<button class="question_mark_button" onclick="window.open('/Users/ianxie/Desktop/Python_HTML/Calculater%20Guide.html')">
+			<i class="fa-solid fa-circle-question fa-spin" style="font-size: xx-large"></i>
+		</button>
+	</div>
+	<a href="http://localhost/Calculater_Website/" class="register_login">注册/登陆</a>
 	<button onclick="view_history()" class="History_Button"><img src="history_sign.jpg" class="Button_Image"></button>
 	<div class="setting_checkbox" id="setting_checkbox">
 	    <form id="setting_form">
-		  <input type="checkbox" id="enable_autosave_or_not" name="enable_autosave_or_not" value="autosave" onchange="setting()">
-		  <label for="enable_autosave_or_not"> Auto save result</label><br>
+		  <input type="checkbox" id="enable_dontsave_or_not" name="enable_dontsave_or_not" value="dontsave" onchange="setting()">
+		  <label for="enable_dontsave_or_not"> Don't save result</label><br>
 
 		  <input type="checkbox" id="enable_auto_copy_result" name="enable_auto_copy_result" value="autocopy" onchange="setting()">
 		  <label for="enable_auto_copy_result"> Auto copy result</label><br><br>
@@ -94,7 +158,7 @@
 		</form>
 	</div>
 	<div>
-		<form>
+		<form action="/Applications/XAMPP/htdocs/Calculater_Website/index.php">
 			<br>
 			<b>主题颜色: </b>
 			<select id="prefered_color" onchange="favorite_color()">
@@ -112,13 +176,14 @@
     var show_progress = [];
     var current_number = "";
     var history_list = [];
-    var autosave_or_not = false
+    var dontsave = false
     var autocopy_or_not = false
     var key_name = ''
 	var pi = 3.14
 	var history_list = []
 	var perimeter_button_text =  ""
 	var maximum_float = document.getElementById("maximum_float").value;
+	var loggedin = false
 
     document.addEventListener("keydown", (event) => {
         key_name = event.key;
@@ -179,9 +244,9 @@
 			autocopy_or_not = true
 		}
 
-		var autosave = document.querySelector("#enable_autosave_or_not")
-		if (autosave.checked == true) {
-			autosave_or_not = true
+		var dontsave_check = document.getElementById("enable_dontsave_or_not").checked;
+		if (dontsave_check == true) {
+			dontsave = true
 		}
     }
 
@@ -254,7 +319,7 @@
     }
 
     function view_history() {
-    	window.open("https://yianxie.github.io/Calculater-History/")
+    	window.open("file:///Users/ianxie/Desktop/Python_HTML/%E8%AE%A1%E7%AE%97%E5%99%A8localstorage.html")
     }
 
     function favorite_color() {
@@ -273,57 +338,87 @@
     }
 
     function calculate() {
-        if (current_number !== "") {
-            show_progress.push(parseFloat(current_number));
-            current_number = "";
-        }
-        const show_progress_length = show_progress.length;
-        let result = show_progress[0];
-        for (let i = 1; i < show_progress_length; i += 2) {
-            const operator = show_progress[i];
-            const operand = show_progress[i + 1];
-            if (operator === "+") {
-                result += operand;
-            } else if (operator === "-") {
-                result -= operand;
-            } else if (operator === "*") {
-                result *= operand;
-            } else if (operator === "/") {
-                result /= operand;
-            }
-        }
+		var result = 0;
+		var temp_value = 0;
+		const show_progress_length = show_progress.length;
 
-		if (Number.isInteger(result) == true) {
-			show_progress_h1.innerHTML = result;
-        	show_progress.push("=")
-        	show_progress.push(result)
-		} else {
-			result = result.toFixed(maximum_float);
-			show_progress_h1.innerHTML = result;
-        	show_progress.push("=")
-        	show_progress.push(result)
+		if (current_number !== "") {
+			show_progress.push(parseFloat(current_number));
+			current_number = "";
+		}
+		
+		main_loop:for (let i = 1;i < show_progress.length;i+=2) {
+			const operator = show_progress[i];
+			const operand = show_progress[i+1];
+			if (operator == "*") {
+				temp_value = show_progress[i - 1] * show_progress[i + 1];
+				show_progress.splice(i - 1, 3);
+				show_progress.splice(i - 1, 0, temp_value);
+				if (show_progress.includes("+") || show_progress.includes("-")) {
+					result = show_progress[0];
+					var final_result = plus_and_minus();
+				} else {
+					final_result = show_progress[0];
+				}
+			} else if (operator == "/") {
+				temp_value = show_progress[i - 1] / show_progress[i + 1];
+				show_progress.splice(i - 1, 3);
+				show_progress.splice(i - 1, 0, temp_value);
+				if (show_progress.includes("+") || show_progress.incluwwdes("-")) {
+					result = show_progress[0];
+					var final_result = plus_and_minus();
+				} else {
+					final_result = show_progress[0];
+				}
+			} else {
+				if (show_progress.includes("*") || show_progress.includes("/")) {
+					continue main_loop;
+				} else {
+					result = show_progress[0];
+					var final_result = plus_and_minus();
+				}
+			}
 		}
 
-        if (autocopy_or_not == true) {
-        	navigator.clipboard.writeText(result)
-        }
+		function plus_and_minus() {
+			for (let i = 1; i < show_progress.length; i += 2) {
+				const operator = show_progress[i];
+				const operand = show_progress[i + 1];
+				if (operator == "+") {
+					result = result + operand;
+				} else if (operator == "-") {
+					result = result - operand;
+				} 
+			};
+			return result
+		}
+		
+		if (Number.isInteger(final_result)) {
+			show_progress_h1.innerHTML = final_result;
+			show_progress.push("=");
+			show_progress.push(final_result);
+		} else {
+			final_result = final_result.toFixed(maximum_float);
+			show_progress_h1.innerHTML = final_result;
+			show_progress.push("=");
+			show_progress.push(final_result);
+		}
+
+		if (autocopy_or_not) {
+			navigator.clipboard.writeText(final_result);
+		}
 
 		history_list.push({
 			time: new Date(),
-			calculation: show_progress.join("")
-		})
+			calculation: show_progress.join(" ")
+		});
 
-		save_or_not_function(autosave_or_not)
-        
-    }
+		save_or_not_function(dontsave);
+	}
+
 	
-	function save_or_not_function(autosave_or_not) {
-		if (autosave_or_not !== true) {
-    		save_or_not = confirm("是否要保存这次的计算结果?")
-    		if (save_or_not == true) {
-    			localStorage.setItem("history_localstorage",JSON.stringify(history_list))
-    		}
-    	} else {
+	function save_or_not_function(dontsave) {
+		if (dontsave == false) {
         	localStorage.setItem("history_localstorage",JSON.stringify(history_list))
         }
 	}
