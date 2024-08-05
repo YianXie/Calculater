@@ -1,0 +1,49 @@
+table {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+table tr {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    /* border: 1px solid; */
+}
+
+tr.row-1 {
+    background: grey;
+}
+
+table td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid black;
+    cursor: pointer;
+    min-width: 75px;
+    min-height: 75px;
+    font-size: 30px;
+    font-family: sans-serif;
+}
+
+table td.calculating-symbol {
+    background: orange;
+}
+
+table td.input-area {
+    width: 100%;
+    background: rgb(99, 99, 99);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* justify-content: end; */
+    cursor: auto;
+}
+
+table tr:not(.row-1) {
+    background: lightgrey;
+}
