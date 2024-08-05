@@ -1,426 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" name="myCalculater" content="width=device-width, initual-scale=1">
-	<script src="https://kit.fontawesome.com/6e8d093844.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            text-align: center;
-            background-color: whitesmoke;
-        }
-
-        button {
-            margin: 5px;
-            width: 50px;
-            height: 50px;
-			font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        }
-
-        .plus_sign,.minus_sign,.times_sign,.division_sign,.equal_sign {
-        	background-color: orange;
-        	border: none;
-        }
-
-		.plus_sign:hover {
-			background-color: rgb(181, 113, 49);
-		}
-
-		.number_1:active,.number_2:active,.number_3:active,.number_4:active,.number_5:active,.number_6:active,.number_7:active,.number_8:active,.number_9:active,.number_0:active {
-  			background-color: white;
-  			box-shadow: 0px 5px #666;
-  			transform: translateY(4px);
-		}
-
-		.plus_sign:active,.minus_sign:active,.times_sign:active,.division_sign:active {
-			background-color: orange;
-			box-shadow: 0px 5px black;
-		}
-
-		.minus_sign:hover {
-			background-color: rgb(181, 113, 49);
-		}
-
-		.times_sign:hover {
-			background-color: rgb(181, 113, 49);
-		}
-
-		.division_sign:hover {
-			background-color: rgb(181, 113, 49);
-		}
-
-        .negative_or_positive,.percentage_sign,.clear {
-        	background-color: lightslategray;
-			border: none;
-        }
-
-		.negative_or_positive:active,.percentage_sign:active,.clear:active {
-			background-color: lightslategray;
-			box-shadow: 0px 5px #666;
-		}
-
-		.negative_or_positive:hover {
-			background-color: rgb(46, 71, 95);
-		}
-
-		.percentage_sign:hover {
-			background-color: rgb(46, 71, 95);
-		}
-
-		.clear:hover {
-			background-color: rgb(227, 66, 66);
-		}
-
-		.equal_sign:hover {
-			background-color: rgb(243, 199, 199);
-		}
-
-        .History_Button {
-        	width: 55px;
-			position: relative;
-			right: 710px;
-			top: -420px;
-			padding: 0px;
-			border: none;
-			background: none;
-        }
-
-        .Button_Image {
-        	width: 50px;
-        	height: 50px;
-        }
-
-        .submit_button {
-        	width: 100px;
-        	height: 80px;
-        }
-
-		.register_login {
-			position: relative;
-			left: 700px;
-			top: -445px;
-		}
-
-		.question_mark_button {
-			position: relative;
-			right: -670px;
-			bottom: -362px;
-			border: none;
-			background: none;
-		}
-    </style>
-    <title>Calculater</title>
+	<title>Calculator</title>
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link href="index.css" rel="stylesheet">
 </head>
-<body id="main_body">
-<div>
-	<h2 id="show_progress_h1" class="result_paragraph">0</h2>
-	<button onclick="clear_all()" id="C" class="clear">C</button>
-	<button onclick="negative_number()" id="+/-" class="negative_or_positive">+/-</button>
-	<button onclick="percentage()" id="%" class="percentage_sign">%</button>
-	<button onclick="add_to_list(this.id)" id="/" class="division_sign">/</button>
-	<br>
-	<button onclick="add_to_list(this.id)" id="1" class="number_1">1</button>
-	<button onclick="add_to_list(this.id)" id="2" class="number_2">2</button>
-	<button onclick="add_to_list(this.id)" id="3" class="number_3">3</button>
-	<button onclick="add_to_list(this.id)" id="+" class="plus_sign">+</button>
-	<br>
-	<button onclick="add_to_list(this.id)" id="4" class="number_4">4</button>
-	<button onclick="add_to_list(this.id)" id="5" class="number_5">5</button>
-	<button onclick="add_to_list(this.id)" id="6" class="number_6">6</button>
-	<button onclick="add_to_list(this.id)" id="-" class="minus_sign">-</button>
-	<br>
-	<button onclick="add_to_list(this.id)" id="7" class="number_7">7</button>
-	<button onclick="add_to_list(this.id)" id="8" class="number_8">8</button>
-	<button onclick="add_to_list(this.id)" id="9" class="number_9">9</button>
-	<button onclick="add_to_list(this.id)" id="*" class="times_sign">*</button>
-	<br>
-	<button onclick="add_to_list(this.id)" class="number_0" id="0">0</button>
-	<button onclick="add_to_list(this.id)" id="dot_sign" class="dot_sign">.</button>
-	<button onclick="perimeter_and_area()" id="perimeter_and_area" class="perimeter_and_area">面</button>
-	<button onclick="calculate()" id="=" class="equal_sign">=</button>
-</div>
-	<div>
-		<button class="question_mark_button" onclick="window.open('/Users/ianxie/Desktop/Python_HTML/Calculater%20Guide.html')">
-			<i class="fa-solid fa-circle-question fa-spin" style="font-size: xx-large"></i>
-		</button>
-	</div>
-	<a href="http://localhost/Calculater_Website/" class="register_login">注册/登陆</a>
-	<button onclick="view_history()" class="History_Button"><img src="history_sign.jpg" class="Button_Image"></button>
-	<div class="setting_checkbox" id="setting_checkbox">
-	    <form id="setting_form">
-		  <input type="checkbox" id="enable_dontsave_or_not" name="enable_dontsave_or_not" value="dontsave" onchange="setting()">
-		  <label for="enable_dontsave_or_not"> Don't save result</label><br>
-
-		  <input type="checkbox" id="enable_auto_copy_result" name="enable_auto_copy_result" value="autocopy" onchange="setting()">
-		  <label for="enable_auto_copy_result"> Auto copy result</label><br><br>
-
-		  <input type="number" id="maximum_float" name="maximum_float" value=16 onchange="maximum_float_function()">
-		  <label for="maximum_float"> 小数最大数位 </label>
-		</form>
-	</div>
-	<div>
-		<form action="/Applications/XAMPP/htdocs/Calculater_Website/index.php">
-			<br>
-			<b>主题颜色: </b>
-			<select id="prefered_color" onchange="favorite_color()">
-				<option id="white" value="white"> Whtie(defalt) </option>
-				<option id="red" value="red"> Red </option>
-				<option id="blue" value="blue"> Blue </option>
-				<option id="green" value="green"> Green </option>
-				<option id="yellow" value="yellow"> Yellow </option>
-			</select>
-		</form>
-	</div>
+<body>
+	<table>
+		<tr style="background: none;">
+			<td id="inputArea" class="input-area"></td>
+		</tr>
+		<tr class="row-1">
+			<td>C</td>
+			<td>+/-</td>
+			<td>%</td>
+			<td class="calculating-symbol">/</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>8</td>
+			<td>9</td>
+			<td class="calculating-symbol">*</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>5</td>
+			<td>6</td>
+			<td class="calculating-symbol">-</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+			<td class="calculating-symbol">+</td>
+		</tr>
+		<tr>
+			<td style="width: 100%;">0</td>
+			<td>.</td>
+			<td class="calculating-symbol">=</td>
+		</tr>
+	</table>
+	<script src="index.js"></script>
 </body>
-<script>
-
-    var show_progress = [];
-    var current_number = "";
-    var history_list = [];
-    var dontsave = false
-    var autocopy_or_not = false
-    var key_name = ''
-	var pi = 3.14
-	var history_list = []
-	var perimeter_button_text =  ""
-	var maximum_float = document.getElementById("maximum_float").value;
-	var loggedin = false
-
-    document.addEventListener("keydown", (event) => {
-        key_name = event.key;
-		if (key_name == "1") {
-			add_to_list("1")
-		} else if (key_name == "2") {
-			add_to_list("2")
-		} else if (key_name == "3") {
-			add_to_list("3")
-		} else if (key_name == "4") {
-			add_to_list("4")
-		} else if (key_name == "5") {
-			add_to_list("5")
-		} else if (key_name == "6") {
-			add_to_list("6")
-		} else if (key_name == "7") {
-			add_to_list("7")
-		} else if (key_name == "8") {
-			add_to_list("8")
-		} else if (key_name == "9") {
-			add_to_list("9")
-		} else if (key_name == "0") {
-			add_to_list("0")
-		} else if (key_name == "+") {
-			add_to_list("+")
-		} else if (key_name == "-") {
-			add_to_list("-")
-		} else if (key_name == "*") {
-			add_to_list("*")
-		} else if (key_name == "/") {
-			add_to_list("/")
-		} else if (key_name == "Enter") {
-			calculate()
-		} else if (key_name == "Escape") {
-			clear_all()
-		} else if (key_name == ".") {
-			add_to_list(".")
-		} else if (key_name == "r") {
-			perimeter_and_area()
-		}
-    }, false);
-
-	document.getElementById("perimeter_and_area").addEventListener("mousedown",(event) => {
-		perimeter_button_text = document.getElementById("perimeter_and_area").innerHTML
-		right_click = event.button
-		if (right_click == 2) {
-			if (perimeter_button_text == "面") {
-				document.getElementById("perimeter_and_area").innerHTML = "周"
-			} else {
-				document.getElementById("perimeter_and_area").innerHTML = "面"
-			}
-		}
-	},false)
-
-	function setting() {
-		var autocopy = document.querySelector("#enable_auto_copy_result")
-		if (autocopy.checked == true) {
-			autocopy_or_not = true
-		}
-
-		var dontsave_check = document.getElementById("enable_dontsave_or_not").checked;
-		if (dontsave_check == true) {
-			dontsave = true
-		}
-    }
-
-    function add_to_list(number_id) {
-    	show_progress_h1.innerHTML = ''
-        if (number_id.match(/[0-9.]/)) {
-            current_number += number_id;
-        } else {
-            // If the button is an operator or equals, push the current number and operator to the list
-            if (current_number !== "") {
-            	show_progress_h1.innerHTML += current_number
-
-            	if (number_id == "+") {
-            		document.getElementById("+").style.border = "solid"
-            	} else if (number_id == "-") {
-            		document.getElementById("-").style.border = "solid"
-            	} else if (number_id == "*") {
-            		document.getElementById("*").style.border = "solid"
-            	} else if (number_id == "/") {
-            		document.getElementById("/").style.border = "solid"
-            	}  
-                show_progress.push(parseFloat(current_number));
-                current_number = "";
-            }
-            show_progress.push(number_id);
-        }
-        show_progress_h1.innerHTML += current_number
-    }
-        
-
-    function clear_all() {
-        show_progress.length = 0;
-        current_number = "";
-        show_progress_h1.innerHTML = "0";
-        if ((document.getElementById("+").style.border !== "none") || (document.getElementById("-").style.border !== "none") || (document.getElementById("*").style.border !== "none") || (document.getElementById("/").style.border !== "none")) {
-        	document.getElementById("+").style.border = "none"
-        	document.getElementById("-").style.border = "none"
-        	document.getElementById("*").style.border = "none"
-        	document.getElementById("/").style.border = "none"
-        }
-    }
-
-	function perimeter_and_area() {
-		if ((perimeter_button_text == "面") && (current_number !== "")){
-			current_number = (parseFloat(current_number) * current_number * pi).toString();
-			show_progress_h1.innerHTML = show_progress.join(" ") + " " + current_number
-		} else if ((perimeter_button_text == "周") && (current_number !== "")) {
-			current_number = (parseFloat(current_number) * 2 * pi).toString()
-			show_progress_h1.innerHTML = show_progress.join(" ") + " " + current_number
-		}
-	}
-
-	function maximum_float_function() {
-		event.preventDefault()
-		maximum_float = document.getElementById("maximum_float").value;
-	}
-
-    function negative_number() {
-        if (current_number !== "") {
-            current_number = (-parseFloat(current_number)).toString();
-            show_progress_h1.innerHTML = show_progress.join(" ") + " " + current_number;
-        }
-    }
-
-    function percentage() {
-    	if (current_number !== "") {
-    		current_number = (parseFloat(current_number) / 100.).toString();
-    		show_progress_h1.innerHTML = show_progress.join(" ") + " " + current_number;
-    	}
-    }
-
-    function view_history() {
-    	window.open("file:///Users/ianxie/Desktop/Python_HTML/%E8%AE%A1%E7%AE%97%E5%99%A8localstorage.html")
-    }
-
-    function favorite_color() {
-    	choosed_color = document.querySelector("#prefered_color")
-    	if (choosed_color.value == "red") {
-    		document.body.style.backgroundColor = "brown"
-    	} else if (choosed_color.value == "yellow") {
-    		document.body.style.backgroundColor = "khaki"
-    	} else if (choosed_color.value == "blue") {
-    		document.body.style.backgroundColor = "paleturquoise"
-    	} else if (choosed_color.value == "green") {
-    		document.body.style.backgroundColor = "lightgreen"
-    	} else {
-    		document.body.style.backgroundColor = "whitesmoke"
-    	}
-    }
-
-    function calculate() {
-		var result = 0;
-		var temp_value = 0;
-		const show_progress_length = show_progress.length;
-
-		if (current_number !== "") {
-			show_progress.push(parseFloat(current_number));
-			current_number = "";
-		}
-		
-		main_loop:for (let i = 1;i < show_progress.length;i+=2) {
-			const operator = show_progress[i];
-			const operand = show_progress[i+1];
-			if (operator == "*") {
-				temp_value = show_progress[i - 1] * show_progress[i + 1];
-				show_progress.splice(i - 1, 3);
-				show_progress.splice(i - 1, 0, temp_value);
-				if (show_progress.includes("+") || show_progress.includes("-")) {
-					result = show_progress[0];
-					var final_result = plus_and_minus();
-				} else {
-					final_result = show_progress[0];
-				}
-			} else if (operator == "/") {
-				temp_value = show_progress[i - 1] / show_progress[i + 1];
-				show_progress.splice(i - 1, 3);
-				show_progress.splice(i - 1, 0, temp_value);
-				if (show_progress.includes("+") || show_progress.incluwwdes("-")) {
-					result = show_progress[0];
-					var final_result = plus_and_minus();
-				} else {
-					final_result = show_progress[0];
-				}
-			} else {
-				if (show_progress.includes("*") || show_progress.includes("/")) {
-					continue main_loop;
-				} else {
-					result = show_progress[0];
-					var final_result = plus_and_minus();
-				}
-			}
-		}
-
-		function plus_and_minus() {
-			for (let i = 1; i < show_progress.length; i += 2) {
-				const operator = show_progress[i];
-				const operand = show_progress[i + 1];
-				if (operator == "+") {
-					result = result + operand;
-				} else if (operator == "-") {
-					result = result - operand;
-				} 
-			};
-			return result
-		}
-		
-		if (Number.isInteger(final_result)) {
-			show_progress_h1.innerHTML = final_result;
-			show_progress.push("=");
-			show_progress.push(final_result);
-		} else {
-			final_result = final_result.toFixed(maximum_float);
-			show_progress_h1.innerHTML = final_result;
-			show_progress.push("=");
-			show_progress.push(final_result);
-		}
-
-		if (autocopy_or_not) {
-			navigator.clipboard.writeText(final_result);
-		}
-
-		history_list.push({
-			time: new Date(),
-			calculation: show_progress.join(" ")
-		});
-
-		save_or_not_function(dontsave);
-	}
-
-	
-	function save_or_not_function(dontsave) {
-		if (dontsave == false) {
-        	localStorage.setItem("history_localstorage",JSON.stringify(history_list))
-        }
-	}
-</script>
 </html>
